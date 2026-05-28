@@ -1,264 +1,828 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinical Care Hub | AI Medical Assistant</title>
-    <meta name="description" content="A next-generation clinical decision support system, combining symptom rule-based diagnostics and real-time drug risk profile lookups.">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Premium Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MedExpert AI - Clinical Decision Support Console</title>
+    <meta name="description" content="A state-of-the-art clinical support platform combining symptom-based rule diagnostics and medication search."/>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <!-- Material Symbols for Premium Clinical Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-primary-fixed-variant": "#00419c",
+                "on-primary-container": "#bcceff",
+                "primary": "#003c90",
+                "outline": "#737784",
+                "on-background": "#0d1c2f",
+                "on-tertiary-fixed": "#181c1e",
+                "surface-variant": "#d5e3fd",
+                "primary-fixed-dim": "#b0c6ff",
+                "secondary": "#006a6a",
+                "secondary-fixed": "#93f2f2",
+                "inverse-primary": "#b0c6ff",
+                "on-primary": "#ffffff",
+                "on-secondary-fixed": "#002020",
+                "on-secondary-container": "#006e6e",
+                "on-surface-variant": "#434653",
+                "error-container": "#ffdad6",
+                "on-tertiary": "#ffffff",
+                "tertiary-fixed": "#e0e3e5",
+                "surface-container-lowest": "#ffffff",
+                "surface-bright": "#f8f9ff",
+                "background": "#f8f9ff",
+                "error": "#ba1a1a",
+                "inverse-surface": "#233144",
+                "inverse-on-surface": "#ebf1ff",
+                "on-secondary-fixed-variant": "#004f4f",
+                "primary-container": "#0f52ba",
+                "secondary-fixed-dim": "#76d6d5",
+                "on-error": "#ffffff",
+                "on-secondary": "#ffffff",
+                "surface-tint": "#1d59c1",
+                "on-surface": "#0d1c2f",
+                "on-tertiary-fixed-variant": "#434749",
+                "on-error-container": "#93000a",
+                "on-primary-fixed": "#001945",
+                "surface-container": "#e6eeff",
+                "surface-dim": "#ccdbf4",
+                "surface": "#f8f9ff",
+                "surface-container-highest": "#d5e3fd",
+                "surface-container-low": "#eff4ff",
+                "tertiary-fixed-dim": "#c4c7c9",
+                "tertiary-container": "#54585a",
+                "surface-container-high": "#dde9ff",
+                "outline-variant": "#c3c6d5",
+                "on-tertiary-container": "#cbced0",
+                "primary-fixed": "#d9e2ff",
+                "secondary-container": "#90efef",
+                "tertiary": "#3d4143"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "gutter": "24px",
+                "baseline": "4px",
+                "margin-mobile": "16px",
+                "margin-desktop": "48px",
+                "max-width": "1200px"
+            },
+            "fontFamily": {
+                "headline-md": ["Inter"],
+                "label-sm": ["Inter"],
+                "headline-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-lg-mobile": ["Inter"],
+                "body-md": ["Inter"],
+                "label-xs": ["Inter"]
+            },
+            "fontSize": {
+                "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "label-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-xs": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #c3c6d5;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c3c6d5;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #737784;
+        }
+        body {
+            background-color: #f8f9ff;
+            color: #0d1c2f;
+        }
+    </style>
 </head>
-<body>
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-    
-    <header class="app-header">
-        <div class="header-logo">
-            <i class="fa-solid fa-house-laptop logo-icon"></i>
-            <div class="logo-text">
-                <h1>ClinicalCare <span>Hub</span></h1>
-                <span class="logo-subtitle">Interactive Diagnostic Console</span>
-            </div>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
+    <!-- Desktop Sidebar Navigation Shell (Hidden on Mobile) -->
+    <aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant py-6 z-50">
+        <div class="px-6 mb-8">
+            <h1 class="text-headline-md font-bold text-primary flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+                <span>MedExpert</span>
+            </h1>
+            <p class="text-label-xs font-semibold text-on-surface-variant uppercase tracking-widest mt-1">Clinical Support</p>
         </div>
-        
-        <nav class="main-nav">
-            <a href="#diagnostic-panel" class="nav-item active" onclick="activateNavItem(this)"><i class="fa-solid fa-stethoscope"></i> Diagnostic Engine</a>
-            <a href="#search-panel" class="nav-item" onclick="activateNavItem(this)"><i class="fa-solid fa-pills"></i> Medicine Search</a>
+        <nav class="flex-grow space-y-1">
+            <button onclick="switchView('symptom-check')" class="w-[calc(100%-1rem)] text-left mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-full select-nav-btn active-nav-tab" id="sidebar-btn-symptom-check">
+                <span class="material-symbols-outlined">stethoscope</span>
+                <span class="text-label-sm">Symptom Checker</span>
+            </button>
+            <button onclick="switchView('results')" class="w-[calc(100%-1rem)] text-left mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-full select-nav-btn" id="sidebar-btn-results">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-label-sm">Diagnostics Output</span>
+            </button>
+            <button onclick="switchView('dashboard')" class="w-[calc(100%-1rem)] text-left mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-full select-nav-btn" id="sidebar-btn-dashboard">
+                <span class="material-symbols-outlined">history_edu</span>
+                <span class="text-label-sm">Dashboard & History</span>
+            </button>
+            <button onclick="switchView('medicine-search')" class="w-[calc(100%-1rem)] text-left mx-2 px-4 py-3 flex items-center gap-3 transition-all rounded-full select-nav-btn" id="sidebar-btn-medicine-search">
+                <span class="material-symbols-outlined">pills</span>
+                <span class="text-label-sm">Medicine Search</span>
+            </button>
         </nav>
-        
-        <div class="system-status">
-            <span class="status-indicator" id="health-indicator">
-                <span class="status-dot pulsing"></span>
-                <span class="status-label">Checking connection...</span>
-            </span>
+        <div class="px-4 mt-auto">
+            <button onclick="resetSymptomChecker()" class="w-full bg-primary text-on-primary py-3 px-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-primary-container transition-all active:scale-[0.98] shadow-sm">
+                <span class="material-symbols-outlined">add</span>
+                <span>New Diagnosis</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-surface border-b border-outline-variant sticky top-0 z-40 md:ml-64 transition-all">
+        <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto h-16">
+            <div class="flex items-center gap-3 md:hidden">
+                <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+                <span class="text-headline-md font-bold text-primary">MedExpert AI</span>
+            </div>
+            
+            <!-- Desktop Top Menu Tab selectors -->
+            <div class="hidden md:flex gap-8">
+                <button onclick="switchView('symptom-check')" class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-bold select-header-tab" id="header-btn-symptom-check">Symptom Check</button>
+                <button onclick="switchView('results')" class="text-on-surface-variant hover:text-primary transition-colors text-label-sm select-header-tab" id="header-btn-results">Results</button>
+                <button onclick="switchView('dashboard')" class="text-on-surface-variant hover:text-primary transition-colors text-label-sm select-header-tab" id="header-btn-dashboard">Dashboard</button>
+                <button onclick="switchView('medicine-search')" class="text-on-surface-variant hover:text-primary transition-colors text-label-sm select-header-tab" id="header-btn-medicine-search">Medicine Search</button>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <span class="status-indicator flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant" id="connection-status">
+                    <span class="status-dot w-2 h-2 rounded-full bg-warn pulsing"></span>
+                    <span class="text-[11px] font-semibold text-on-surface-variant" id="connection-label">Checking...</span>
+                </span>
+                <button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" title="Help Documentation">help</button>
+                <div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden border border-outline-variant">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+                </div>
+            </div>
         </div>
     </header>
 
-    <main class="dashboard-container">
-        <!-- Left Column: Controls (Diagnostic input + Medicine Search) -->
-        <div class="dashboard-column flex-column">
-            <!-- Module A: Diagnostic Rule Engine Panel -->
-            <section class="dashboard-panel card-glass" id="diagnostic-panel">
-                <div class="panel-header">
-                    <div class="panel-icon"><i class="fa-solid fa-stethoscope"></i></div>
-                    <div class="panel-title-area">
-                        <h2>Diagnostic Rule Engine</h2>
-                        <p>Select presenting symptoms to query illness rule matching</p>
-                    </div>
+    <!-- Main Container Shell -->
+    <main class="md:ml-64 flex-grow min-h-[calc(100vh-8rem)] pb-24 md:pb-12 transition-all">
+        
+        <!-- SECTION 1: Symptom Checker View -->
+        <div id="view-symptom-check" class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-10 w-full animate-fade">
+            <!-- Intro Title -->
+            <div class="mb-10">
+                <span class="text-label-sm text-secondary uppercase font-bold tracking-widest mb-1.5 block">Symptom Checker</span>
+                <h1 class="text-headline-lg-mobile md:text-headline-lg font-bold text-on-background mb-3">Symptom Assessment Console</h1>
+                <p class="text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                    Select your presenting symptoms from the clinical groups below. The rule-based forward chaining engine will map your vectors against the diagnostic database.
+                </p>
+            </div>
+
+            <!-- Main Layout Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+                
+                <!-- Symptom Checklist Form -->
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <!-- Group: General -->
+                    <section class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-primary bg-primary/10 p-2.5 rounded-lg" style="font-variation-settings: 'FILL' 1;">medical_information</span>
+                            <h2 class="text-headline-md font-bold text-on-background">General Symptoms</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="fever" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Fever</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Elevated body temperature / chills</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="fatigue" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Fatigue</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Extreme physical exhaustion or weakness</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="body aches" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Body Aches</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">General muscle soreness or joint pain</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="dizziness" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Dizziness</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Lightheadedness or loss of balance</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="chills" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Chills</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Cold shivers with trembling</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="dry mouth" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Dry Mouth</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Lack of saliva, dehydration feeling</span>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Group: Respiratory -->
+                    <section class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-primary bg-primary/10 p-2.5 rounded-lg" style="font-variation-settings: 'FILL' 1;">respiratory_rate</span>
+                            <h2 class="text-headline-md font-bold text-on-background">Respiratory Symptoms</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="cough" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Cough</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Dry, hacking, or productive wet cough</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="shortness of breath" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Shortness of Breath</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Difficulty breathing or respiratory effort</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="sore throat" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Sore Throat</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Pain, irritation, or raw throat feeling</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="runny nose" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Runny Nose</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Excessive nasal discharge or congestion</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="sneezing" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Sneezing</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Spasmodic nasal expulsions</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="congestion" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Congestion</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Stuffy, blocked sinuses / breathing difficulty</span>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Group: Digestive -->
+                    <section class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-primary bg-primary/10 p-2.5 rounded-lg" style="font-variation-settings: 'FILL' 1;">body_system</span>
+                            <h2 class="text-headline-md font-bold text-on-background">Gastrointestinal Symptoms</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="nausea" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Nausea</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Sensation of discomfort / urge to vomit</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="stomach cramps" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Stomach Cramps</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Abdominal contractions or soreness</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="vomiting" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Vomiting</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Involuntary expulsion of gastric contents</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="diarrhea" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Diarrhea</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Watery, loose, or frequent bowel movements</span>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Group: Other -->
+                    <section class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-primary bg-primary/10 p-2.5 rounded-lg" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                            <h2 class="text-headline-md font-bold text-on-background">Neurological & Other</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="headache" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Headache</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Pain in regions of the skull or neck</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="loss of taste/smell" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Loss of Taste or Smell</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Sensory impairment (anosmia / ageusia)</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="itchy eyes" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Itchy Eyes</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Pruritic ocular irritation, wateriness</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-4 p-3.5 rounded-lg border border-outline-variant/30 bg-white hover:bg-surface-container-high hover:border-primary-container/60 transition-all cursor-pointer group shadow-sm">
+                                <input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary transition-all mt-0.5 symptom-checkbox-input" type="checkbox" value="difficulty swallowing" name="symptom"/>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-on-surface text-sm">Difficulty Swallowing</span>
+                                    <span class="text-label-xs text-on-surface-variant mt-0.5">Dysphagia symptoms / throat blockage</span>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
                 </div>
 
-                <div class="symptom-categories">
-                    <!-- General Symptoms -->
-                    <div class="symptom-group">
-                        <h3><i class="fa-solid fa-user-doctor"></i> General</h3>
-                        <div class="checkbox-grid">
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="fever">
-                                <span class="custom-box"></span> Fever
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="fatigue">
-                                <span class="custom-box"></span> Fatigue
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="body aches">
-                                <span class="custom-box"></span> Body aches
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="dizziness">
-                                <span class="custom-box"></span> Dizziness
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="dry mouth">
-                                <span class="custom-box"></span> Dry mouth
-                            </label>
+                <!-- Selections Summary & Action Panel (Right Side Sticky) -->
+                <div class="lg:col-span-4 lg:sticky lg:top-20 space-y-6">
+                    <div class="bg-surface-container border border-outline-variant p-6 rounded-xl shadow-sm">
+                        <h3 class="text-headline-md font-bold text-primary mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined">assignment</span>
+                            <span>Selected Symptoms</span>
+                        </h3>
+                        
+                        <!-- Selections tags display -->
+                        <div class="space-y-3 mb-8" id="symptoms-summary-container">
+                            <p class="text-on-surface-variant italic text-sm">No symptoms selected yet. Check items on the left to initialize.</p>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="space-y-3">
+                            <button onclick="runSymptomDiagnosis()" class="w-full bg-primary text-on-primary py-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-primary-container transition-all active:scale-[0.98] shadow-md cursor-pointer">
+                                <span class="material-symbols-outlined fill-icon">analytics</span>
+                                <span>Run Inference Engine</span>
+                            </button>
+                            <button onclick="resetSymptomChecker()" class="w-full border border-secondary text-secondary py-3 rounded-lg font-bold hover:bg-secondary/5 transition-all cursor-pointer">
+                                <span>Reset Selections</span>
+                            </button>
+                        </div>
+
+                        <!-- Security note -->
+                        <div class="mt-6 pt-6 border-t border-outline-variant/60 flex gap-3 items-start">
+                            <span class="material-symbols-outlined text-outline">verified_user</span>
+                            <p class="text-[11px] text-on-surface-variant leading-relaxed">
+                                Client connections are localized. Your diagnostics data is processed transiently in clinical alignment with HIPAA directives.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Respiratory Symptoms -->
-                    <div class="symptom-group">
-                        <h3><i class="fa-solid fa-lungs"></i> Respiratory</h3>
-                        <div class="checkbox-grid">
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="cough">
-                                <span class="custom-box"></span> Cough
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="sore throat">
-                                <span class="custom-box"></span> Sore throat
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="runny nose">
-                                <span class="custom-box"></span> Runny nose
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="sneezing">
-                                <span class="custom-box"></span> Sneezing
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="congestion">
-                                <span class="custom-box"></span> Congestion
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="shortness of breath">
-                                <span class="custom-box"></span> Shortness of breath
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="chest discomfort">
-                                <span class="custom-box"></span> Chest discomfort
-                            </label>
+                    <!-- Clinical Advisor Widget -->
+                    <div class="bg-primary text-on-primary p-6 rounded-xl shadow-sm flex gap-4">
+                        <span class="material-symbols-outlined text-on-primary-container text-4xl" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+                        <div>
+                            <h4 class="font-bold mb-1 text-sm text-white">Clinical Tip</h4>
+                            <p class="text-label-xs leading-relaxed text-on-primary-container/90">
+                                Be precise with symptom severity. Elevated fevers accompanied by sudden chest pain require prompt medical evaluation.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Gastrointestinal Symptoms -->
-                    <div class="symptom-group">
-                        <h3><i class="fa-solid fa-stomach"></i> Digestive</h3>
-                        <div class="checkbox-grid">
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="nausea">
-                                <span class="custom-box"></span> Nausea
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="vomiting">
-                                <span class="custom-box"></span> Vomiting
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="diarrhea">
-                                <span class="custom-box"></span> Diarrhea
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="stomach cramps">
-                                <span class="custom-box"></span> Stomach cramps
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Neurological / Other Symptoms -->
-                    <div class="symptom-group">
-                        <h3><i class="fa-solid fa-brain"></i> Other / Neurological</h3>
-                        <div class="checkbox-grid">
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="headache">
-                                <span class="custom-box"></span> Headache
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="loss of taste/smell">
-                                <span class="custom-box"></span> Loss of taste/smell
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="itchy eyes">
-                                <span class="custom-box"></span> Itchy eyes
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="difficulty swallowing">
-                                <span class="custom-box"></span> Difficulty swallowing
-                            </label>
-                            <label class="symptom-checkbox">
-                                <input type="checkbox" name="symptom" value="swollen tonsils">
-                                <span class="custom-box"></span> Swollen tonsils
-                            </label>
+                    <!-- Methodology graphic / info card -->
+                    <div class="rounded-xl overflow-hidden relative h-48 border border-outline-variant shadow-sm group">
+                        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Clinical methodology" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvcpexPWbwMjU62CG2w6d1177LbTnt3Fie9Q3KlSWKmxegyYtAhZh5LwM_LHRU2SzONKIwFvEe-550_8q_0Wb9CMJkcDPTyvUFhzghk2NhCVMd1YvhRdHKA6ZcFzeB6apKUx-CESDURRckQabxX_CFOaukWdV3cbH-JWe4suyZT9WXhpZ46vFHNASPFTpOgkHdg1qUx3mV9qA9pwSdd35KJ1ATcVz-Dsl75MsPCkOpFgnjOVA9_CQQA6Rb4Px8oXoQW05I53bol-Ut"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-5">
+                            <p class="text-white text-sm font-bold uppercase tracking-wider">Predicate Logic Inference</p>
+                            <p class="text-white/80 text-[10px] uppercase font-bold tracking-widest mt-1">Rule Chaining Protocol v4.2</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="panel-actions">
-                    <button id="btn-diagnose" class="btn btn-primary" onclick="runDiagnosis()">
-                        <i class="fa-solid fa-network-wired"></i> Run Diagnostic Engine
-                    </button>
-                    <button id="btn-clear-symptoms" class="btn btn-secondary" onclick="clearSymptoms()">
-                        <i class="fa-solid fa-rotate-left"></i> Reset
-                    </button>
+        <!-- SECTION 2: Diagnostic Results View (Screen 1) -->
+        <div id="view-results" class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-10 w-full animate-fade hidden">
+            <!-- Header Section -->
+            <section class="mb-10">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-outline-variant/60 pb-8">
+                    <div>
+                        <span class="text-label-sm text-secondary uppercase font-bold tracking-widest mb-1.5 block">Analysis Complete</span>
+                        <h1 class="text-headline-lg font-bold text-on-background mb-4">Diagnostic Assessment</h1>
+                        <div class="flex flex-wrap gap-3 items-center">
+                            <span class="text-label-xs font-semibold text-on-surface-variant uppercase">Inputs Recognized:</span>
+                            <div class="flex flex-wrap gap-2 animate-fade" id="results-inputs-badge-container">
+                                <!-- Populated dynamically (e.g. fever, cough, headache) -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-secondary-container p-4 rounded-xl flex items-center gap-4 border border-secondary/15 max-w-sm">
+                        <div class="bg-on-secondary-container/10 p-2.5 rounded-lg text-on-secondary-container flex items-center justify-center">
+                            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
+                        </div>
+                        <div>
+                            <div class="text-[10px] text-on-secondary-container/70 uppercase font-bold tracking-widest">Inference Engine</div>
+                            <div class="text-headline-md font-bold text-on-secondary-container leading-tight mt-0.5">Rule-Based Forward Chaining</div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Module B: Medicine Search Engine Panel -->
-            <section class="dashboard-panel card-glass" id="search-panel">
-                <div class="panel-header">
-                    <div class="panel-icon"><i class="fa-solid fa-pills"></i></div>
-                    <div class="panel-title-area">
-                        <h2>Medicine Search Engine</h2>
-                        <p>Search medications by brand name or generic compound</p>
+            <!-- Results Panel Switcher (Empty state vs filled state) -->
+            <div id="results-empty-state" class="flex flex-col items-center justify-center text-center p-12 bg-white border border-outline-variant rounded-xl shadow-sm min-h-[400px]">
+                <span class="material-symbols-outlined text-primary bg-surface-container p-6 rounded-full text-5xl mb-4" style="font-variation-settings: 'FILL' 0;">query_stats</span>
+                <h3 class="text-headline-md font-bold text-on-background mb-2">No Active Assessment</h3>
+                <p class="text-on-surface-variant text-sm max-w-md leading-relaxed mb-6">
+                    Run the inference diagnostic engine from the Symptom Checker view to compile symptom vectors and display clinical recommendations.
+                </p>
+                <button onclick="switchView('symptom-check')" class="bg-primary text-on-primary py-3 px-6 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-primary-container transition-all">
+                    <span class="material-symbols-outlined">stethoscope</span>
+                    <span>Go to Symptom Checker</span>
+                </button>
+            </div>
+
+            <div id="results-filled-container" class="space-y-10 hidden">
+                <!-- Bento Grid Results -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    
+                    <!-- Primary Match Bento Card -->
+                    <div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 hover:shadow-md transition-all relative overflow-hidden flex flex-col justify-between shadow-sm">
+                        <div class="absolute top-0 right-0 p-6">
+                            <div class="bg-secondary/10 text-secondary px-4 py-2 rounded-full font-bold text-label-sm border border-secondary/20 tracking-wide" id="results-match-percent-badge">
+                                85% Match
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-start gap-4 mb-6">
+                                <div class="bg-primary/10 p-3.5 rounded-xl text-primary flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-3xl">medical_services</span>
+                                </div>
+                                <div>
+                                    <h2 class="text-headline-lg font-bold text-primary leading-none" id="results-primary-illness-title">Influenza (Flu)</h2>
+                                    <p class="text-on-surface-variant max-w-lg mt-3 text-sm leading-relaxed" id="results-illness-description">
+                                        Your reported symptoms align closely with seasonal influenza patterns detected by the clinical logic engine.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-outline-variant/60">
+                                <!-- Standard advice card -->
+                                <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/50 flex flex-col justify-between">
+                                    <div>
+                                        <h4 class="text-label-sm font-bold text-on-surface mb-3 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">info</span>
+                                            <span>Standard Advice</span>
+                                        </h4>
+                                        <ul class="text-on-surface-variant text-label-xs space-y-2" id="results-advice-list">
+                                            <!-- Loaded dynamically -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Safety alert warning card -->
+                                <div class="p-4 bg-error-container/30 rounded-lg border border-error/20 flex flex-col justify-between">
+                                    <div>
+                                        <h4 class="text-label-sm font-bold text-error mb-3 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-error text-lg" style="font-variation-settings: 'FILL' 1;">warning</span>
+                                            <span>Critical Warning</span>
+                                        </h4>
+                                        <p class="text-on-error-container text-label-xs leading-relaxed" id="results-triage-text">
+                                            This is a decision support system. If you experience persistent breathing difficulty, high fever spikes, or chest discomfort, seek emergency medical care immediately.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Suggestions (Differential Diagnoses Bento) -->
+                    <div class="md:col-span-4 flex flex-col gap-6" id="results-differentials-container">
+                        <!-- Loaded dynamically via JS -->
                     </div>
                 </div>
 
-                <div class="search-container">
-                    <div class="search-bar-wrapper">
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" id="medicine-search-input" placeholder="Type a drug (e.g. Paracetamol, Advil, Xanax...)" onkeyup="handleSearchKeyup(event)">
-                        <button class="btn btn-search" onclick="runSearch()"><i class="fa-solid fa-arrow-right"></i></button>
+                <!-- Professional Recommendation & Actions block -->
+                <section class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                    <div class="bg-primary text-on-primary p-8 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div>
+                            <h3 class="text-headline-md font-bold mb-3 flex items-center gap-2 text-white">
+                                <span class="material-symbols-outlined">clinical_notes</span>
+                                <span>Clinical Action Protocol</span>
+                            </h3>
+                            <p class="text-on-primary-container text-sm leading-relaxed mb-6">
+                                While the Rule-Based Inference engine suggests diagnostic alignment, a definitive diagnosis requires human practitioner triage. We strongly advise booking a general consultation.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-4 border-t border-primary-container/40">
+                            <button onclick="bookGP()" class="bg-white text-primary px-6 py-3.5 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all shadow-sm cursor-pointer text-sm">
+                                <span class="material-symbols-outlined text-lg">calendar_today</span>
+                                <span>Book GP Consultation</span>
+                            </button>
+                            <button onclick="exportPdfReport()" class="bg-primary-container/20 border border-white/20 text-white px-6 py-3.5 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-primary-container/40 transition-colors cursor-pointer text-sm">
+                                <span class="material-symbols-outlined text-lg">download</span>
+                                <span>Export Report</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="search-tips">
-                        <span>Try: Crocin, Ibuprofen, Lipitor, Amoxicillin, Ventolin</span>
+                    
+                    <div class="relative rounded-xl overflow-hidden min-h-[250px] shadow-sm">
+                        <img alt="Medical laboratory" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMWt1h5mbOLPfihPzwtWBQDy3_TDlTCX4ugGYV-IJXl9VzgMNev9lblyuAKhdHf7FEyniJp5s3xcEKBkYoYiwyb8T7D-CKC83QCGegZZehUZfo6z3cGTL5501h5YGMwHCXSBpk7NbywY3Q1PuNCUEwUDFOWiSsPRkh7lyvLrlGcCA5m2HRegRWpZk7ic2WKhZIHprvrSK5n-3lMc8qxB5IeAJlN_86lHrWXPEAQkAHXNhdzr41qcIVODw0uW2rnYtvfvQgDz79Vsl8"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-on-background/90 to-transparent flex flex-col justify-end p-8">
+                            <h4 class="text-white text-headline-md font-bold mb-2 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-white text-xl">fact_check</span>
+                                <span>Inference Quality Control</span>
+                            </h4>
+                            <p class="text-surface-variant text-label-xs leading-relaxed">
+                                Our diagnostic mapping evaluates logic coordinates against clinical guidelines representing checked profiles.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Technical Specs Bottom Bento -->
+                <section class="bg-surface-container-low border border-outline-variant p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center gap-2 mb-4 text-on-surface-variant">
+                        <span class="material-symbols-outlined">terminal</span>
+                        <span class="text-label-xs font-bold uppercase tracking-widest">Inference Compilation Matrix</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-outline uppercase font-bold tracking-wider">Logic Model</span>
+                            <span class="text-sm font-bold text-on-surface mt-1" id="tech-model-name">Forward Chaining v1.2</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-outline uppercase font-bold tracking-wider">Knowledge Base</span>
+                            <span class="text-sm font-bold text-on-surface mt-1" id="tech-kb-type">Flask SQL-Relational</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-outline uppercase font-bold tracking-wider">Compile Time</span>
+                            <span class="text-sm font-bold text-on-surface mt-1" id="tech-latency">14ms</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-outline uppercase font-bold tracking-wider">Predicate Score</span>
+                            <span class="text-sm font-bold text-on-surface mt-1" id="tech-predicate">Logic Engine V2.4</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- SECTION 3: Clinical Dashboard & History View (Screen 2) -->
+        <div id="view-dashboard" class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-10 w-full animate-fade hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                <div>
+                    <span class="text-label-sm text-secondary uppercase font-bold tracking-widest mb-1.5 block">Clinical Console</span>
+                    <h2 class="text-headline-lg font-bold text-on-background">Diagnostic Dashboard & History</h2>
+                    <p class="text-body-md text-on-surface-variant mt-1.5 leading-relaxed">Review your patient diagnostic reports and expert system metrics.</p>
+                </div>
+                <button onclick="switchView('symptom-check')" class="md:hidden w-full bg-primary text-on-primary py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm">
+                    <span class="material-symbols-outlined">add</span>
+                    <span>New Diagnosis</span>
+                </button>
+            </div>
+
+            <!-- Bento Stats Layout Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+                
+                <!-- Left widgets stack -->
+                <div class="lg:col-span-4 space-y-6">
+                    <!-- Stat Card: Checks -->
+                    <div class="bg-white border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-primary bg-surface-container p-2 rounded-lg" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+                            <h3 class="text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Checks Performed</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-end">
+                                <span class="text-4xl font-extrabold text-on-background tracking-tight" id="dashboard-checks-count">14</span>
+                                <span class="text-[10px] font-bold text-secondary bg-secondary-container/50 px-2.5 py-1 rounded-full border border-secondary/10" id="dashboard-checks-week-badge">+2 this week</span>
+                            </div>
+                            <p class="text-[10px] text-outline uppercase font-bold tracking-widest">Aggregate rule runs</p>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card: Accuracy -->
+                    <div class="bg-white border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-secondary bg-secondary-container p-2 rounded-lg" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                            <h3 class="text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Average Confidence</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="text-4xl font-extrabold text-on-background tracking-tight" id="dashboard-avg-confidence">89%</div>
+                            <p class="text-label-xs text-on-surface-variant leading-relaxed">
+                                Average semantic match confidence across recorded diagnostic sessions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Guide Promotional Card -->
+                    <div class="relative overflow-hidden rounded-xl h-64 flex flex-col justify-end p-6 group shadow-sm">
+                        <div class="absolute inset-0 z-0">
+                            <img alt="Medical Consultation" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhpcgopg6wRZROq8u6UxhkeuB9SfCY0o2LM2c46WCDeTrzNfF2_KxPniPOpVNgdBJ-RYypEa4GcO0qs1JBq4G7JamRUWqyfl9Jfw2cnXlOKqKkyjFcilIjWFVX1uVLFZvFHKg_DLxWUKJ7MJ5spGdX2VaJlPYX9jGmCsHzs8ss96a_xHQgagXeOxM2VDouVaRgXuSG56-X17RzlWyRV7HrROp8l7Ds3YDXFhUx17VDLtOK5yc1rjbrHyxTVGzSFCRfaK4o0z9F1kVq"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-on-background via-on-background/50 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-white text-headline-md font-bold mb-2 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-white text-xl">clinical_notes</span>
+                                <span>Winter Health Guide</span>
+                            </h4>
+                            <p class="text-white/85 text-label-xs leading-relaxed mb-4">
+                                Protect yourself against seasonal viral respiratory transmissions with our compiled AI insights.
+                            </p>
+                            <a class="text-white text-label-sm font-bold underline hover:text-secondary-fixed transition-colors" href="#">Read Technical Insights</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="search-output-area">
-                    <div id="search-empty-state" class="empty-state">
-                        <div class="empty-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
-                        <p>Enter a medicine name above to display standard dosage, precautions, and safety risk flags.</p>
+                <!-- Recent Clinical Reports (Main bento table) -->
+                <div class="col-span-12 lg:col-span-8">
+                    <div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col justify-between h-full">
+                        <div>
+                            <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+                                <h3 class="text-headline-md font-bold text-on-background">Recent Clinical Assessments</h3>
+                                <button onclick="clearDashboardHistory()" class="text-error hover:text-error/85 transition-colors text-label-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-base">delete</span>
+                                    <span>Clear History</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Dynamically loaded list of reports -->
+                            <div class="divide-y divide-outline-variant/60" id="dashboard-reports-list">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                        
+                        <div class="p-5 bg-surface-container-low text-center border-t border-outline-variant/60">
+                            <span class="text-label-xs text-on-surface-variant font-medium">Inference logs are compiled in standard relational database schema.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: Medicine Formulation Search View -->
+        <div id="view-medicine-search" class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-10 w-full animate-fade hidden">
+            <!-- Header Title -->
+            <div class="mb-10">
+                <span class="text-label-sm text-secondary uppercase font-bold tracking-widest mb-1.5 block">Formulary Database</span>
+                <h1 class="text-headline-lg-mobile md:text-headline-lg font-bold text-on-background mb-3">Medicine Search Engine</h1>
+                <p class="text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                    Search active medical compounds by brand or chemical designation. Verify standard dosage specifications and safety risk flag metrics.
+                </p>
+            </div>
+
+            <!-- Bento search bar box -->
+            <div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm mb-8">
+                <div class="p-6 bg-surface-container-low border-b border-outline-variant/60">
+                    <div class="relative flex items-center w-full">
+                        <span class="material-symbols-outlined text-outline absolute left-4 text-xl">search</span>
+                        <input type="text" id="med-search-input" placeholder="Enter medicine brand or compound name (e.g. Paracetamol, Advil, Xanax...)" class="w-full bg-white border border-outline-variant/80 rounded-xl pl-12 pr-16 py-3.5 text-sm outline-none text-on-surface focus:border-primary focus:ring-1 focus:ring-primary/45 transition-all shadow-inner" onkeyup="handleMedSearchKeyup(event)"/>
+                        <button onclick="runMedSearch()" class="bg-primary text-on-primary px-5 py-2.5 rounded-lg font-bold hover:bg-primary-container transition-all absolute right-2 text-sm flex items-center justify-center gap-1.5 shadow-sm cursor-pointer active:scale-95">
+                            <span>Query</span>
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>
+                    </div>
+                    <div class="mt-3 flex flex-wrap gap-2 items-center">
+                        <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Quick Suggestions:</span>
+                        <div class="flex gap-2">
+                            <button onclick="suggestSearch('Crocin')" class="text-[11px] font-bold text-primary bg-primary/5 hover:bg-primary/10 border border-primary/15 px-2.5 py-1 rounded-full transition-all">Crocin</button>
+                            <button onclick="suggestSearch('Ibuprofen')" class="text-[11px] font-bold text-primary bg-primary/5 hover:bg-primary/10 border border-primary/15 px-2.5 py-1 rounded-full transition-all">Ibuprofen</button>
+                            <button onclick="suggestSearch('Lipitor')" class="text-[11px] font-bold text-primary bg-primary/5 hover:bg-primary/10 border border-primary/15 px-2.5 py-1 rounded-full transition-all">Lipitor</button>
+                            <button onclick="suggestSearch('Amoxicillin')" class="text-[11px] font-bold text-primary bg-primary/5 hover:bg-primary/10 border border-primary/15 px-2.5 py-1 rounded-full transition-all">Amoxicillin</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Results List Section -->
+                <div class="p-8 min-h-[300px] flex flex-col justify-center" id="med-search-results-area">
+                    <!-- Empty State -->
+                    <div id="med-search-empty" class="flex flex-col items-center text-center py-6">
+                        <span class="material-symbols-outlined text-outline text-5xl mb-3" style="font-variation-settings: 'FILL' 0;">medication</span>
+                        <h4 class="text-headline-md font-bold text-on-background mb-1">Enter Search Query</h4>
+                        <p class="text-on-surface-variant text-label-xs max-w-sm leading-relaxed">
+                            Search for standard dosage indexes, warnings, precautions, and high/moderate/low clinical risk indexes.
+                        </p>
                     </div>
 
-                    <div id="search-loading" class="spinner-state" style="display: none;">
-                        <i class="fa-solid fa-circle-notch fa-spin"></i>
-                        <p>Searching the database...</p>
+                    <!-- Spinner State -->
+                    <div id="med-search-loading" class="flex flex-col items-center justify-center py-8 gap-3 hidden">
+                        <span class="material-symbols-outlined text-primary text-4xl animate-spin">progress_activity</span>
+                        <p class="text-label-xs text-on-surface-variant font-bold uppercase tracking-widest">Querying pharmaceutical database...</p>
                     </div>
 
-                    <div id="search-results-container" style="display: none;">
+                    <!-- Results List wrapper -->
+                    <div id="med-search-results" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
                         <!-- Populated dynamically via JS -->
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
-        <!-- Right Column: Outputs (Predictions & Triage) -->
-        <section class="dashboard-panel card-glass" id="output-panel">
-            <div class="panel-header">
-                <div class="panel-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-                <div class="panel-title-area">
-                    <h2>Engine Analysis Output</h2>
-                    <p>Illness predictions and triage guidelines</p>
-                </div>
-            </div>
-
-            <div class="output-content">
-                <div id="diagnostic-empty-state" class="empty-state">
-                    <div class="empty-icon"><i class="fa-solid fa-clipboard-list"></i></div>
-                    <p>Select symptoms on the left and click "Run Diagnostic Engine" to calculate matches.</p>
-                </div>
-
-                <div id="diagnostic-results" style="display: none;">
-                    <div class="results-section">
-                        <h3>Predicted Illnesses</h3>
-                        <div id="illness-list" class="illness-list-grid">
-                            <!-- Populated dynamically via JS -->
-                        </div>
-                    </div>
-
-                    <div class="results-section">
-                        <h3>Triage & Care Advice</h3>
-                        <div class="triage-card" id="triage-card">
-                            <div class="triage-header">
-                                <i class="fa-solid fa-shield-halved triage-icon"></i>
-                                <span>Recommended Next Steps</span>
-                            </div>
-                            <p id="triage-text">Triage advice text here...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <footer class="app-footer">
-        <p><i class="fa-regular fa-copyright"></i> 2026 ClinicalCare Hub. All Rights Reserved. Clinical Decision Support System Prototype.</p>
+    <!-- Global Footer -->
+    <footer class="bg-surface-container-lowest border-t border-outline-variant py-8 mt-auto md:ml-64 transition-all">
+        <div class="max-w-max-width mx-auto px-margin-desktop">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex flex-col gap-1.5 items-center md:items-start">
+                    <span class="text-sm font-bold text-primary">MedExpert AI</span>
+                    <p class="text-outline text-[11px] text-center md:text-left leading-normal max-w-sm">
+                        © 2026 MedExpert AI Clinical Decision Support Console. For prototype decision validation only. Not for emergency operations.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-6 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
+                    <a class="hover:text-primary transition-colors" href="#">Privacy Directive</a>
+                    <a class="hover:text-primary transition-colors" href="#">Clinical Protocol</a>
+                    <a class="text-primary underline" href="#">Liability Disclaimer</a>
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <!-- Mobile Bottom Navigation Bar (Visible only on mobile devices) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant h-16 flex justify-around items-center z-50 shadow-lg">
+        <button onclick="switchView('symptom-check')" class="flex flex-col items-center justify-center text-on-surface-variant flex-grow select-mobile-btn active-mobile-tab" id="mobile-btn-symptom-check">
+            <span class="material-symbols-outlined text-xl">stethoscope</span>
+            <span class="text-[9px] font-bold mt-0.5">Check</span>
+        </button>
+        <button onclick="switchView('results')" class="flex flex-col items-center justify-center text-on-surface-variant flex-grow select-mobile-btn" id="mobile-btn-results">
+            <span class="material-symbols-outlined text-xl">analytics</span>
+            <span class="text-[9px] font-bold mt-0.5">Results</span>
+        </button>
+        
+        <!-- Big center add check button -->
+        <div class="relative -top-4 select-mobile-btn">
+            <button onclick="resetSymptomChecker()" class="bg-primary text-on-primary h-14 w-14 rounded-full shadow-md flex items-center justify-center border-4 border-background active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">add</span>
+            </button>
+        </div>
+        
+        <button onclick="switchView('dashboard')" class="flex flex-col items-center justify-center text-on-surface-variant flex-grow select-mobile-btn" id="mobile-btn-dashboard">
+            <span class="material-symbols-outlined text-xl">history_edu</span>
+            <span class="text-[9px] font-bold mt-0.5">Dashboard</span>
+        </button>
+        <button onclick="switchView('medicine-search')" class="flex flex-col items-center justify-center text-on-surface-variant flex-grow select-mobile-btn" id="mobile-btn-medicine-search">
+            <span class="material-symbols-outlined text-xl">pills</span>
+            <span class="text-[9px] font-bold mt-0.5">Meds</span>
+        </button>
+    </nav>
+
+    <!-- App Script -->
     <script src="app.js"></script>
 </body>
 </html>

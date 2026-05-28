@@ -1,0 +1,837 @@
+:root {
+    --font-sans: 'Inter', sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+    
+    /* Elegant Dark Theme Palette */
+    --color-bg-darkest: #070a13;
+    --color-bg-dark: #0b0f19;
+    --color-card-bg: rgba(17, 24, 39, 0.65);
+    --color-card-border: rgba(255, 255, 255, 0.08);
+    --color-card-hover-border: rgba(59, 130, 246, 0.3);
+    
+    /* Neon Glow Accents */
+    --color-primary: #3b82f6;
+    --color-primary-rgb: 59, 130, 246;
+    --color-cyan: #06b6d4;
+    --color-cyan-rgb: 6, 182, 212;
+    
+    /* Risk Levels & Warnings */
+    --color-safe: #10b981;
+    --color-safe-glow: rgba(16, 185, 129, 0.25);
+    --color-warn: #f59e0b;
+    --color-warn-glow: rgba(245, 158, 11, 0.25);
+    --color-danger: #ef4444;
+    --color-danger-glow: rgba(239, 68, 68, 0.25);
+    
+    /* Text Colors */
+    --color-text-bright: #ffffff;
+    --color-text-main: #e2e8f0;
+    --color-text-muted: #94a3b8;
+    --color-text-dark: #475569;
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius-lg: 16px;
+    --border-radius-md: 10px;
+    --border-radius-sm: 6px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-main);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Glowing Background Orbs */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    opacity: 0.15;
+    pointer-events: none;
+    animation: pulseGlow 10s infinite alternate;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(6, 182, 212, 0.2) 100%);
+    top: -100px;
+    left: -100px;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.8) 0%, rgba(99, 102, 241, 0.2) 100%);
+    bottom: -150px;
+    right: -100px;
+    animation-delay: 2s;
+}
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+    100% {
+        transform: scale(1.1) translate(20px, 20px);
+    }
+}
+
+/* App Header styling */
+.app-header {
+    background: rgba(7, 10, 19, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-card-border);
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: var(--color-cyan);
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));
+}
+
+.logo-text h1 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--color-text-bright);
+}
+
+.logo-text h1 span {
+    color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-cyan), var(--color-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-subtitle {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    display: block;
+    margin-top: 1px;
+}
+
+/* Navigation Bar styling */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.35rem 0.85rem;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.nav-item {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 20px;
+    transition: var(--transition-smooth);
+    border: 1px solid transparent;
+}
+
+.nav-item i {
+    font-size: 0.85rem;
+}
+
+.nav-item:hover {
+    color: var(--color-text-bright);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-item.active {
+    color: var(--color-text-bright);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.08);
+}
+
+.system-status {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-warn);
+}
+
+.status-dot.online {
+    background-color: var(--color-safe);
+    box-shadow: 0 0 8px var(--color-safe);
+}
+
+.status-dot.offline {
+    background-color: var(--color-danger);
+    box-shadow: 0 0 8px var(--color-danger);
+}
+
+.pulsing {
+    animation: statusPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.status-label {
+    color: var(--color-text-main);
+}
+
+/* Dashboard Workspace Grid */
+.dashboard-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.75rem;
+    padding: 2.25rem 2.5rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.dashboard-column {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+/* Glass Cards */
+.card-glass {
+    background: var(--color-card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-glass:hover {
+    border-color: var(--color-card-hover-border);
+    box-shadow: 0 12px 35px rgba(59, 130, 246, 0.08);
+}
+
+/* Panel Header styling */
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.panel-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--border-radius-md);
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.1);
+}
+
+#search-panel .panel-icon {
+    background: rgba(6, 182, 212, 0.1);
+    color: var(--color-cyan);
+    box-shadow: inset 0 0 10px rgba(6, 182, 212, 0.1);
+}
+
+#output-panel .panel-icon {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--color-safe);
+    box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.1);
+}
+
+.panel-title-area h2 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-bright);
+}
+
+.panel-title-area p {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-top: 1px;
+}
+
+/* Diagnostic Checkboxes styling */
+.symptom-categories {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 320px;
+}
+
+.symptom-group {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.symptom-group h3 {
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-cyan);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.35rem;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+}
+
+.symptom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    color: var(--color-text-main);
+    transition: var(--transition-smooth);
+    user-select: none;
+    padding: 0.25rem 0;
+}
+
+.symptom-checkbox:hover {
+    color: var(--color-text-bright);
+    transform: translateX(2px);
+}
+
+.symptom-checkbox input {
+    display: none;
+}
+
+.custom-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    display: inline-block;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.symptom-checkbox input:checked + .custom-box {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
+}
+
+.symptom-checkbox input:checked + .custom-box::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 9px;
+    color: var(--color-text-bright);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.panel-actions {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    gap: 0.75rem;
+    background: rgba(7, 10, 19, 0.2);
+}
+
+/* Buttons styling */
+.btn {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.82rem;
+    padding: 0.65rem 1.2rem;
+    border-radius: var(--border-radius-md);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), #2563eb);
+    color: var(--color-text-bright);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+    filter: brightness(1.1);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--color-text-main);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-bright);
+}
+
+/* Empty States */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--color-text-muted);
+    flex: 1;
+    min-height: 350px;
+}
+
+.empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-dark);
+}
+
+.empty-state p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    max-width: 260px;
+}
+
+.spinner-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    color: var(--color-cyan);
+    font-size: 2rem;
+    gap: 1rem;
+}
+
+.spinner-state p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+/* Output Layout styling */
+.output-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.results-section {
+    margin-bottom: 1.75rem;
+}
+
+.results-section h3 {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-bright);
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Illness lists styling */
+.illness-list-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.illness-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--border-radius-md);
+    padding: 0.9rem 1.1rem;
+    transition: var(--transition-smooth);
+}
+
+.illness-item:hover {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.illness-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.illness-name {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 550;
+    color: var(--color-text-bright);
+}
+
+.illness-match-score {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-cyan);
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-cyan));
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.1, 0.8, 0.25, 1);
+}
+
+/* Triage Card styling */
+.triage-card {
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    border-radius: var(--border-radius-md);
+    padding: 1.1rem;
+    position: relative;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.02);
+}
+
+.triage-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--color-safe);
+    margin-bottom: 0.6rem;
+}
+
+.triage-icon {
+    font-size: 1rem;
+}
+
+#triage-text {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-text-main);
+}
+
+/* Module B: Search Panel styling */
+.search-container {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(7, 10, 19, 0.15);
+}
+
+.search-bar-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.1rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+#medicine-search-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem 3rem 0.75rem 2.6rem;
+    color: var(--color-text-bright);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+#medicine-search-input:focus {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--color-cyan);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+}
+
+.btn-search {
+    position: absolute;
+    right: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--color-cyan);
+    color: var(--color-bg-darkest);
+    border-radius: var(--border-radius-sm);
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.btn-search:hover {
+    background: var(--color-text-bright);
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+}
+
+.search-tips {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    margin-top: 0.6rem;
+    padding-left: 0.2rem;
+}
+
+.search-tips span {
+    font-style: italic;
+}
+
+/* Medicine Results styling */
+.search-output-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    max-height: 400px;
+}
+
+.medicine-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-md);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.medicine-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.medicine-title-area h3 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-bright);
+}
+
+.medicine-brands {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+.risk-badge {
+    padding: 0.35rem 0.7rem;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.risk-low {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--color-safe);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 10px var(--color-safe-glow);
+}
+
+.risk-moderate {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--color-warn);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    box-shadow: 0 0 10px var(--color-warn-glow);
+}
+
+.risk-high {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--color-danger);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    box-shadow: 0 0 10px var(--color-danger-glow);
+}
+
+.info-item {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius-sm);
+    padding: 0.65rem 0.8rem;
+}
+
+.info-item strong {
+    color: var(--color-cyan);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-item p {
+    color: var(--color-text-main);
+}
+
+/* Footer styling */
+.app-footer {
+    background: var(--color-bg-darkest);
+    border-top: 1px solid var(--color-card-border);
+    padding: 1.25rem 2.5rem;
+    text-align: center;
+    margin-top: auto;
+}
+
+.app-footer p {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    .symptom-categories {
+        max-height: 380px;
+    }
+    .output-content {
+        max-height: 380px;
+    }
+}
+
+@media (max-width: 600px) {
+    .checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+    .app-header {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+    }
+    .header-logo {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+}

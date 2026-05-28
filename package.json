@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "python Backend/server.py"
+  },
+  "dependencies": {
+    "motion": "^12.40.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3"
+  }
+}

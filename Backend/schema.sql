@@ -1,0 +1,24 @@
+
+CREATE TABLE users(
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ name TEXT,
+ email TEXT UNIQUE,
+ password_hash TEXT,
+ role TEXT DEFAULT 'patient'
+);
+
+CREATE TABLE diagnoses(
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ user_id INTEGER,
+ symptoms TEXT,
+ disease TEXT,
+ risk_score REAL,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE reports(
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ user_id INTEGER,
+ file_path TEXT,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
